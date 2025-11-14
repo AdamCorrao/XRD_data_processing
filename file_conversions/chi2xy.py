@@ -3,6 +3,8 @@
 Function to convert all .chi files in a given directory to .xy files.
 Skips rows with metadata in .chi file specified in function argument.
 Optional xy_dir argument to specify different output directory for .xy files.
+
+Note: on Windows the chi_dir and xy_dir paths should be given as raw strings (r"your\path\here") to avoid issues with os separators (slashes).
 """
 
 from pathlib import Path
@@ -24,6 +26,7 @@ def chi2xy(chi_dir, rows_to_skip, xy_dir=None, xy_float_format="%.8f", xy_delimi
             chi_path,
             skiprows=rows_to_skip,
             header=None,
-            delim_whitespace=True
+            delimiter='\\s+'
         )
-        data.to_csv(xy_path, index=False, float_format=xy_float_format, sep=xy_delimiter)
+
+        data.to_csv(xy_path, index=False, float_format=xy_float_format, header=False, sep=xy_delimiter)
