@@ -3,14 +3,12 @@
 Function to convert all .chi files in a given directory to .xy files.
 Skips rows with metadata in .chi file specified in function argument.
 Optional xy_dir argument to specify different output directory for .xy files.
-Author: Adam Corrao
-Date last modified: Nov. 14, 2025 (pathlib update)
 """
 
 from pathlib import Path
 import pandas as pd
 
-def chi2xy(chi_dir, rows_to_skip, xy_dir=None):
+def chi2xy(chi_dir, rows_to_skip, xy_dir=None, xy_float_format="%.8f", xy_delimiter="\t"):
     chi_dir = Path(chi_dir)
     xy_dir = Path(xy_dir) if xy_dir is not None else chi_dir
 
@@ -28,4 +26,4 @@ def chi2xy(chi_dir, rows_to_skip, xy_dir=None):
             header=None,
             delim_whitespace=True
         )
-        data.to_csv(xy_path, index=False, float_format="%.8f", sep="\t")
+        data.to_csv(xy_path, index=False, float_format=xy_float_format, sep=xy_delimiter)
